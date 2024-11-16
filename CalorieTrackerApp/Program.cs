@@ -1,3 +1,6 @@
+using CalorieTrackerCookBookApp.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace CalorieTrackerApp
 {
     public class Program
@@ -7,6 +10,9 @@ namespace CalorieTrackerApp
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
