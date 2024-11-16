@@ -9,6 +9,6 @@ namespace CalorieTrackerCookBookApp.Data
         [MaxLength(ModelIdMaxLength)]
         public Guid Id { get; set; }
 
-        public byte[] DataBytes { get; set; }
+        public byte[] DataBytes { get; set; } = null!;
     }
 }

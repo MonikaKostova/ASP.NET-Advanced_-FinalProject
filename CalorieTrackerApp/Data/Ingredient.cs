@@ -11,6 +11,6 @@ namespace CalorieTrackerCookBookApp.Data
 
         [Required]
         [MaxLength(IngredientMaxLength)]
-        public string NameAndQuantity { get; set; }
+        public string NameAndQuantity { get; set; } = null!;
     }
 }

@@ -13,12 +13,12 @@ namespace CalorieTrackerCookBookApp.Data
         [Required]
         [MaxLength(RecipeNameMaxLength,
             ErrorMessage = RecipeNameMaxLengthExceeded)]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         [Required]
         [MaxLength(RecipeDescriptionMaxLength,
             ErrorMessage = RecipeDescriptionLengthExceeded)]
-        public string Description { get; set; }
+        public string Description { get; set; } = null!;
 
         [Required]
         public int CookingTime { get; set; }
@@ -29,16 +29,16 @@ namespace CalorieTrackerCookBookApp.Data
         [Required]
         [MaxLength(RecipePreparationStepsMaxLength,
             ErrorMessage = RecipePreparationStepsLengthExceeded)]
-        public string PreparationSteps { get; set; }
+        public string PreparationSteps { get; set; } = null!;
 
         [ForeignKey(nameof(Image))]
         public Guid ImageId { get; set; }
-        public Image Image { get; set; }
+        public Image? Image { get; set; }
 
         public Guid? UserId { get; set; }
 
-        public List<Ingredient> IngredientsList { get; set; }
+        public List<Ingredient> IngredientsList { get; set; } = null!;
 
-        public List<Like> Likes { get; set; }
+        public List<Like> Likes { get; set; } = null!;
     }
 }
