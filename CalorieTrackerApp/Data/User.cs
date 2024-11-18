@@ -1,35 +1,32 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using static CalorieTrackerCookBookApp.Common.ValidationConstraints;
 
 namespace CalorieTrackerCookBookApp.Data
 {
-    public class User : IdentityUser
+    public class User
     {
-        
-       [Key]
-       [MaxLength(ModelIdMaxLength)]
-       public int FullId { get; set; }
+        public User()
+        {
+            this.Recipes = new List<Recipe>();
+            this.LikedRecipes = new List<Like>();
+        }
 
-
-        [Required]
-        public string CurrentUsername { get; set; } = null!;
+        [Key]
+        [MaxLength(ModelIdMaxLength)]
+        public Guid Id { get; set; }
 
         [Required]
         [EmailAddress]
         [MaxLength(UserEmailMaxLength,
             ErrorMessage = EmailMaxLengthExceeded)]
-        public string UserEmail { get; set; } = null!;
+        public string Email { get; set; } = null!;
 
         [Required]
         public string Password { get; set; } = null!;
 
-        // One-to-Many relationship: A User can have many Recipes
-        public ICollection<Recipe> Recipes { get; set; } = new List<Recipe>();
+        public List<Recipe> Recipes { get; set; }
 
-        // Many-to-Many relationship: A User can have many Favorites
-        public ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();
-
+        public List<Like> LikedRecipes { get; set; }
     }
-
+   
 }
