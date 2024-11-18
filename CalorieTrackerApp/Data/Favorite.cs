@@ -4,19 +4,19 @@ using static CalorieTrackerCookBookApp.Common.ValidationConstraints;
 
 namespace CalorieTrackerCookBookApp.Data
 {
-    public class Like
+    public class Favorite
     {
-        [Key]
-        public ulong Id { get; set; }
+       
+        public string UserId { get; set; } = null!;
 
-        [Required]
-        [ForeignKey(nameof(User))]
-        public Guid UserId { get; set; }
+        public int RecipeId { get; set; }
+
+        // Foreign Keys
+       // [ForeignKey("UserId")]
         public User User { get; set; } = null!;
 
-        [Required]
-        [ForeignKey(nameof(Recipe))]
-        public Guid RecipeId { get; set; }
+        //[ForeignKey("RecipeId")]
         public Recipe Recipe { get; set; } = null!;
+        public bool IsDeleted { get; internal set; }
     }
 }

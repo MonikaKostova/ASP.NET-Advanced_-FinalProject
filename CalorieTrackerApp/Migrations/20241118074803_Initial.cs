@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CalorieTrackerCookBookApp.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,6 +30,9 @@ namespace CalorieTrackerCookBookApp.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CurrentUsername = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserEmail = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -48,31 +51,6 @@ namespace CalorieTrackerCookBookApp.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Images",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", maxLength: 36, nullable: false),
-                    DataBytes = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Images", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", maxLength: 36, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -185,39 +163,89 @@ namespace CalorieTrackerCookBookApp.Migrations
                 name: "Recipes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", maxLength: 36, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
-                    CookingTime = table.Column<int>(type: "int", nullable: false),
-                    Portions = table.Column<int>(type: "int", nullable: false),
-                    PreparationSteps = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
-                    ImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<int>(type: "int", maxLength: 36, nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RecipeName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    RecipeDescription = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Recipes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Recipes_Images_ImageId",
-                        column: x => x.ImageId,
-                        principalTable: "Images",
+                        name: "FK_Recipes_AspNetUsers_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsApproved = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RecipeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comments_Recipes_RecipeId",
+                        column: x => x.RecipeId,
+                        principalTable: "Recipes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Favorites",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RecipeId = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Favorites", x => new { x.UserId, x.RecipeId });
+                    table.ForeignKey(
+                        name: "FK_Favorites_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Recipes_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        name: "FK_Favorites_Recipes_RecipeId",
+                        column: x => x.RecipeId,
+                        principalTable: "Recipes",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Ingredients",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", maxLength: 36, nullable: false),
-                    NameAndQuantity = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    RecipeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<int>(type: "int", maxLength: 36, nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Calories = table.Column<double>(type: "float", nullable: false),
+                    Macronutrients = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RecipeId = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -226,34 +254,27 @@ namespace CalorieTrackerCookBookApp.Migrations
                         name: "FK_Ingredients_Recipes_RecipeId",
                         column: x => x.RecipeId,
                         principalTable: "Recipes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Likes",
+                name: "RecipeImages",
                 columns: table => new
                 {
-                    Id = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
+                    Id = table.Column<int>(type: "int", maxLength: 36, nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RecipeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RecipeId = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Likes", x => x.Id);
+                    table.PrimaryKey("PK_RecipeImages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Likes_Recipes_RecipeId",
+                        name: "FK_RecipeImages_Recipes_RecipeId",
                         column: x => x.RecipeId,
                         principalTable: "Recipes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Likes_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -296,29 +317,34 @@ namespace CalorieTrackerCookBookApp.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_AuthorId",
+                table: "Comments",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_RecipeId",
+                table: "Comments",
+                column: "RecipeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Favorites_RecipeId",
+                table: "Favorites",
+                column: "RecipeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Ingredients_RecipeId",
                 table: "Ingredients",
                 column: "RecipeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Likes_RecipeId",
-                table: "Likes",
+                name: "IX_RecipeImages_RecipeId",
+                table: "RecipeImages",
                 column: "RecipeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Likes_UserId",
-                table: "Likes",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Recipes_ImageId",
+                name: "IX_Recipes_OwnerId",
                 table: "Recipes",
-                column: "ImageId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Recipes_UserId",
-                table: "Recipes",
-                column: "UserId");
+                column: "OwnerId");
         }
 
         /// <inheritdoc />
@@ -340,25 +366,25 @@ namespace CalorieTrackerCookBookApp.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
+                name: "Favorites");
+
+            migrationBuilder.DropTable(
                 name: "Ingredients");
 
             migrationBuilder.DropTable(
-                name: "Likes");
+                name: "RecipeImages");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Recipes");
 
             migrationBuilder.DropTable(
-                name: "Images");
-
-            migrationBuilder.DropTable(
-                name: "Users");
+                name: "AspNetUsers");
         }
     }
 }

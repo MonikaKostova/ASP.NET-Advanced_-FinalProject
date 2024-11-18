@@ -8,37 +8,40 @@ namespace CalorieTrackerCookBookApp.Data
     {
         [Key]
         [MaxLength(ModelIdMaxLength)]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(RecipeNameMaxLength,
             ErrorMessage = RecipeNameMaxLengthExceeded)]
-        public string Name { get; set; } = null!;
+        public string RecipeName { get; set; } = null!;
 
         [Required]
         [MaxLength(RecipeDescriptionMaxLength,
             ErrorMessage = RecipeDescriptionLengthExceeded)]
-        public string Description { get; set; } = null!;
+        public string RecipeDescription { get; set; } = null!;
 
         [Required]
-        public int CookingTime { get; set; }
+        public string Category { get; set; } = null!;
 
+        // Foreign Key: Links to User
         [Required]
-        public int Portions { get; set; }
+        public string OwnerId { get;  set; } = null!;
 
-        [Required]
-        [MaxLength(RecipePreparationStepsMaxLength,
-            ErrorMessage = RecipePreparationStepsLengthExceeded)]
-        public string PreparationSteps { get; set; } = null!;
+        [ForeignKey("OwnerId")] // Foreign Key
+        public User Owner { get; set; } = null!;
 
-        [ForeignKey(nameof(Image))]
-        public Guid ImageId { get; set; }
-        public Image? Image { get; set; }
+        // One-to-Many relationship: A Recipe can have many Images
+        public ICollection<RecipeImage> Images { get; set; } = new List<RecipeImage>();
+        
+        // One-to-Many relationship: A Recipe can have many Ingredients
 
-        public Guid? UserId { get; set; }
+        public ICollection<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
+        
+        // One-to-Many relationship: A Recipe can have many Comments
+        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
-        public List<Ingredient> IngredientsList { get; set; } = null!;
+        public ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();
 
-        public List<Like> Likes { get; set; } = null!;
+        public bool IsDeleted { get; set; } = false;
     }
 }
