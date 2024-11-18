@@ -20,7 +20,7 @@ namespace CalorieTrackerApp
                 .AddDefaultTokenProviders();
 
             // Add other services like controllers
-            //builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
 
