@@ -4,19 +4,13 @@ using static CalorieTrackerCookBookApp.Common.ValidationConstraints;
 
 namespace CalorieTrackerCookBookApp.Data
 {
-    public class Ingredient
+    public class RecipeImage
     {
         [Key]
         [MaxLength(ModelIdMaxLength)]
         public int Id { get; set; }
 
-        [Required]
-        [MaxLength(IngredientMaxLength)]
-        public string Name { get; set; } = null!;
-        public double Calories { get; set; }
-        public string Macronutrients { get; set; } = null!;
-       
-
+        public string? Url { get; set; }
         // Foreign Key: Links to Recipe
         [Required]
         public int RecipeId { get; set; }
