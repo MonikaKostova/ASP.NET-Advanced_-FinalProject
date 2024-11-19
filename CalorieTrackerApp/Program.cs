@@ -1,6 +1,8 @@
 using CalorieTrackerCookBookApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using CalorieTrackerCookBookApp.Controllers;
+using CalorieTrackerCookBookApp.Services;
 
 namespace CalorieTrackerApp
 {
@@ -58,5 +60,6 @@ namespace CalorieTrackerApp
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+        
     }
 }

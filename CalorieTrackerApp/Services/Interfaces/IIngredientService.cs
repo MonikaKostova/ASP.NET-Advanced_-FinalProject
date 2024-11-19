@@ -1,7 +1,7 @@
 ﻿using CalorieTrackerCookBookApp.Data;
 using CalorieTrackerCookBookApp.Models;
 
-namespace CalorieTrackerCookBookApp.Controllers
+namespace CalorieTrackerCookBookApp.Services.Interfaces
 {
     public interface IIngredientService
     {
