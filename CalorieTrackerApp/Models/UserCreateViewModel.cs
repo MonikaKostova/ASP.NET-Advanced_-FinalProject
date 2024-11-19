@@ -4,6 +4,8 @@ namespace CalorieTrackerCookBookApp.Models
 {
     public class UserCreateViewModel
     {
+        public int Id { get; set; }
+
         [Required]
         public string CurrentUsername { get; set; } = null!;
 

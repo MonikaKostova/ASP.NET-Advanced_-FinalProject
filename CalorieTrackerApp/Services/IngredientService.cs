@@ -1,6 +1,8 @@
-﻿namespace CalorieTrackerCookBookApp.Services
+﻿using CalorieTrackerCookBookApp.Services.Interfaces;
+
+namespace CalorieTrackerCookBookApp.Services
 {
-    public class IngredientService
+    public class IngredientService 
     {
     }
 }

@@ -6,9 +6,9 @@ namespace CalorieTrackerCookBookApp.Services.Interfaces
     {
         IEnumerable<UserViewModel> GetAllUsers();
         UserViewModel GetUserById(int id);
-        UserCreateViewModel GetUserForEdit(int id);
+        UserCreateViewModel GetUserForEdit(int userId);
         void CreateUser(UserCreateViewModel model);
-        void UpdateUser(UserCreateViewModel model);
+        void UpdateUser(UserCreateViewModel userViewModel);
         void DeleteUser(int id);
     }
 }

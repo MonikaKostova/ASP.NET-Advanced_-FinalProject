@@ -27,7 +27,7 @@ namespace CalorieTrackerApp
             builder.Services.AddControllersWithViews();
 
             // Service registration
-            //builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IUserService, UserService>();
             //builder.Services.AddScoped<IRecipeService, RecipeService>();
             builder.Services.AddScoped<ICommentService, CommentService>();
             builder.Services.AddScoped<IFavoriteService, FavoriteService>();
