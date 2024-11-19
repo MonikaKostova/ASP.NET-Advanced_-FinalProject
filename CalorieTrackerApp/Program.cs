@@ -30,7 +30,7 @@ namespace CalorieTrackerApp
             //builder.Services.AddScoped<IUserService, UserService>();
             //builder.Services.AddScoped<IRecipeService, RecipeService>();
             builder.Services.AddScoped<ICommentService, CommentService>();
-            //builder.Services.AddScoped<IFavoriteService, FavoriteService>();
+            builder.Services.AddScoped<IFavoriteService, FavoriteService>();
             //builder.Services.AddScoped<IIngredientService, IngredientService>();
 
             var app = builder.Build();
