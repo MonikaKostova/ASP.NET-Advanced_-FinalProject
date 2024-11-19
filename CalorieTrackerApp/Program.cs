@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using CalorieTrackerCookBookApp.Controllers;
 using CalorieTrackerCookBookApp.Services;
+using CalorieTrackerCookBookApp.Services.Interfaces;
+
 
 namespace CalorieTrackerApp
 {
@@ -23,6 +25,13 @@ namespace CalorieTrackerApp
 
             // Add other services like controllers
             builder.Services.AddControllersWithViews();
+
+            // Service registration
+            //builder.Services.AddScoped<IUserService, UserService>();
+            //builder.Services.AddScoped<IRecipeService, RecipeService>();
+            builder.Services.AddScoped<ICommentService, CommentService>();
+            //builder.Services.AddScoped<IFavoriteService, FavoriteService>();
+            //builder.Services.AddScoped<IIngredientService, IngredientService>();
 
             var app = builder.Build();
 
