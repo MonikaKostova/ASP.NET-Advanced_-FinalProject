@@ -13,7 +13,7 @@ namespace CalorieTrackerCookBookApp.Models
 
         public double Calories { get; set; }
         public string Macronutrients { get; set; } = null!;
-
+        public string Quantity { get; set; } = null!;
         public int RecipeId { get; set; }
         public string RecipeName { get; set; } = null!; // To display recipe name
     }

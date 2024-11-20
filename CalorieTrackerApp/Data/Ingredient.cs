@@ -15,7 +15,7 @@ namespace CalorieTrackerCookBookApp.Data
         public string Name { get; set; } = null!;
         public double Calories { get; set; }
         public string Macronutrients { get; set; } = null!;
-       
+        public string Quantity { get; set; } = null!;
 
         // Foreign Key: Links to Recipe
         [Required]
