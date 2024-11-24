@@ -1,0 +1,28 @@
+﻿@model CalorieTrackerCookBookApp.ViewModels.FavoriteViewModel
+
+@{
+    ViewData["Title"] = "Add to Favorites";
+}
+
+<h2>Add Recipe to Favorites</h2>
+
+<p>Are you sure you want to add this recipe to your favorites?</p>
+
+<div class="form-group">
+    <label>Recipe Name:</label>
+    <span>@Model.Recipe.Name</span>
+</div>
+
+<div class="form-group">
+    <label>Description:</label>
+    <span>@Model.Recipe.Description</span>
+</div>
+
+<form asp-action="Add" method="post">
+    <input type="hidden" asp-for="UserId" />
+    <input type="hidden" asp-for="RecipeId" />
+
+    <button type="submit" class="btn btn-primary">Add to Favorites</button>
+    <a asp-action="Index" asp-route-userId="@Model.UserId" class="btn btn-secondary">Cancel</a>
+</form>
+

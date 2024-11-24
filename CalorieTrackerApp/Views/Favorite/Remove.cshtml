@@ -1,0 +1,27 @@
+﻿@model CalorieTrackerCookBookApp.ViewModels.FavoriteViewModel
+
+@{
+    ViewData["Title"] = "Remove from Favorites";
+}
+
+<h2>Remove Recipe from Favorites</h2>
+
+<p>Are you sure you want to remove this recipe from your favorites?</p>
+
+<div class="form-group">
+    <label>Recipe Name:</label>
+    <span>@Model.Recipe.Name</span>
+</div>
+
+<div class="form-group">
+    <label>Description:</label>
+    <span>@Model.Recipe.Description</span>
+</div>
+
+<form asp-action="RemoveFromFavorites" method="post">
+    <input type="hidden" asp-for="UserId" />
+    <input type="hidden" asp-for="RecipeId" />
+
+    <button type="submit" class="btn btn-danger">Remove from Favorites</button>
+    <a asp-action="Index" asp-route-userId="@Model.UserId" class="btn btn-secondary">Cancel</a>
+</form>
