@@ -1,0 +1,27 @@
+﻿@model CalorieTrackerCookBookApp.Models.RecipeCreateViewModel
+
+@{
+    ViewData["Title"] = "Create Recipe";
+}
+
+<h2>Create Recipe</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="RecipeName"></label>
+        <input asp-for="RecipeName" class="form-control" />
+        <span asp-validation-for="RecipeName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="RecipeDescription"></label>
+        <textarea asp-for="RecipeDescription" class="form-control"></textarea>
+        <span asp-validation-for="RecipeDescription" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Category"></label>
+        <input asp-for="Category" class="form-control" type="number" />
+        <span asp-validation-for="Category" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
