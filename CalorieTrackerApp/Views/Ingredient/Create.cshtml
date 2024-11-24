@@ -1,0 +1,46 @@
+﻿@model CalorieTrackerCookBookApp.ViewModels.IngredientViewModel
+
+@{
+    ViewData["Title"] = "Add Ingredient";
+}
+
+<h2>Add Ingredient</h2>
+
+<!-- Form to Create a New Ingredient -->
+<form asp-action="Create" method="post">
+    <!-- Validation Summary -->
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <input type="hidden" asp-for="RecipeId" />
+
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Calories"></label>
+        <input asp-for="Calories" class="form-control" type="number" />
+        <span asp-validation-for="Calories" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Macronutrients"></label>
+        <input asp-for="Macronutrients" class="form-control" />
+        <span asp-validation-for="Macronutrients" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Quantity"></label>
+        <input asp-for="Quantity" class="form-control" />
+        <span asp-validation-for="Quantity" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" asp-route-recipeId="@Model.RecipeId" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section scripts {
+    <!-- Include client-side validation scripts -->
+}

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<CalorieTrackerCookBookApp.ViewModels.IngredientViewModel>
+
+@{
+    ViewData["Title"] = "Ingredients";
+}
+
+<h2>Ingredients</h2>
+
+<!-- Link to Create New Ingredient -->
+<a asp-action="Create" asp-route-recipeId="@Model.FirstOrDefault()?.RecipeId" class="btn btn-primary">
+    Add New Ingredient
+</a>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Calories</th>
+            <th>Macronutrients</th>
+            <th>Quantity</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ingredient in Model)
+        {
+            <tr>
+                <td>@ingredient.Name</td>
+                <td>@ingredient.Calories</td>
+                <td>@ingredient.Macronutrients</td>
+                <td>@ingredient.Quantity</td>
+                <td>
+                    <!-- Delete Ingredient -->
+                    <a asp-action="Delete" asp-route-id="@ingredient.Id" class="btn btn-danger btn-sm">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
