@@ -70,7 +70,21 @@ namespace CalorieTrackerCookBookApp.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public IActionResult Delete(string id)
+        {
+            int userId = int.Parse(id);
+            var user = _userService.GetUserById(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        public IActionResult DeleteConfirmed(string id)
         {
             int userId = int.Parse(id);
             _userService.DeleteUser(userId);

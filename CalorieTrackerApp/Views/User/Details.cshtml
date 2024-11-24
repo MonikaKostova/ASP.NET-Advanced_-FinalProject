@@ -1,0 +1,9 @@
+﻿@model CalorieTrackerCookBookApp.Models.UserViewModel
+
+<h2>User Details</h2>
+<div>
+    <h3>@Model.CurrentUsername</h3>
+    <p>Email: @Model.UserEmail</p>
+</div>
+<a href="@Url.Action("Index", "User")" class="btn btn-secondary">Back to List</a>
+
