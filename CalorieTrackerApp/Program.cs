@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using CalorieTrackerCookBookApp.Controllers;
 using CalorieTrackerCookBookApp.Services;
 using CalorieTrackerCookBookApp.Services.Interfaces;
+using Microsoft.AspNetCore.Builder;
 
 
 namespace CalorieTrackerApp
@@ -68,6 +69,7 @@ namespace CalorieTrackerApp
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            
         }
         
     }
