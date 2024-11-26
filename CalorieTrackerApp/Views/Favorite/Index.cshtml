@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CalorieTrackerCookBookApp.ViewModels.FavoriteViewModel>
+﻿@model IEnumerable<CalorieTrackerCookBookApp.Models.FavoriteViewModel>
 
 @{
     ViewData["Title"] = "Favorite Recipes";
@@ -10,7 +10,6 @@
     <thead>
         <tr>
             <th>Recipe Name</th>
-            <th>Description</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -18,8 +17,7 @@
         @foreach (var favorite in Model)
         {
             <tr>
-                <td>@favorite.Recipe.Name</td>
-                <td>@favorite.Recipe.Description</td>
+                <td>@favorite.RecipeName</td>
                 <td>
                     <!-- Remove from favorites button -->
                     <a asp-action="RemoveFromFavorites" asp-route-userId="@favorite.UserId" asp-route-recipeId="@favorite.RecipeId" class="btn btn-danger btn-sm">

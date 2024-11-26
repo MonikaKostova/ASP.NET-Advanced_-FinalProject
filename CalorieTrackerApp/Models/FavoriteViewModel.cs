@@ -7,5 +7,6 @@
 
         public string UserName { get; set; } = null!;  // To display the user name
         public string RecipeName { get; set; } = null!; // To display the recipe name
+        public string RecipeDescription { get; set; } = null!; // To display the recipe description
     }
 }
