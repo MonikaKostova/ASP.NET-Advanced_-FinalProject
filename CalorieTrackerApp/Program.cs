@@ -24,52 +24,34 @@ namespace CalorieTrackerApp
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            // Add other services like controllers
+            // Add other services like controllers and views
             builder.Services.AddControllersWithViews();
 
             // Service registration
+
             builder.Services.AddScoped<IUserService, UserService>();
-            //builder.Services.AddScoped<IRecipeService, RecipeService>();
+            builder.Services.AddScoped<IRecipeService, RecipeService>();
             builder.Services.AddScoped<ICommentService, CommentService>();
             builder.Services.AddScoped<IFavoriteService, FavoriteService>();
-            //builder.Services.AddScoped<IIngredientService, IngredientService>();
+            builder.Services.AddScoped<IIngredientService, IngredientService>();
 
             var app = builder.Build();
 
-            // Use authentication and authorization
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            // Map controllers and views
-            app.MapControllers();
-            app.Run();
-        }
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
-            }
-
+            // Configure middleware, authentication and authorization
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
+            // Default route
+            app.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
-            
+                    pattern: "{controller=Home}/{action=Index}/{id?}"
+            );
+
+
+            app.Run();
         }
         
     }

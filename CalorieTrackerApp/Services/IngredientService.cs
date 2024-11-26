@@ -4,7 +4,7 @@ using CalorieTrackerCookBookApp.Services.Interfaces;
 
 namespace CalorieTrackerCookBookApp.Services
 {
-    public class IngredientService 
+    public class IngredientService :IIngredientService
     {
         private readonly ApplicationDbContext _context;
 
