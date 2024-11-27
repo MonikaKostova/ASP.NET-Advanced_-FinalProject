@@ -1,8 +1,90 @@
-﻿@{
+﻿@using CalorieTrackerCookBookApp
+@using CalorieTrackerCookBookApp.Data
+@using Microsoft.AspNetCore.Identity
+@using CalorieTrackerCookBookApp.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@{
+    Layout = "_Layout";
+}
+@{
     ViewData["Title"] = "Home Page";
 }
+<!-- Start slides -->
+<div class="conteiner-fluid ">
+    <div class="container homeinfo">
+        <h1 class="m-b-20"><strong>Welcome to <br> Healthy meal recipes!</strong></h1>
+        <p class="m-b-40">
+            Feel free to explore our world of  <br>
+            healthy cooking and healthy life! <br>
+        </p>
+        @if (!this.SignInManager.IsSignedIn(this.User))
+        {
+            <p class="m-b-40" id="UnRegistered" style="font-size: 22px;">
+                You can join our community<br>
+                by creating free account
+            </p>
+            
+            <a class="nav-link" href="@Url.Action("Register", "Account")">Sign Up</a>
+            
+        }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+       
+    </div>
+    
 </div>
+<!-- End slides -->
+
+<!-- Start Back to Top button -->
+<a href="#" id="back-to-top" title="Back to top" style="display: none;">
+    <i class="fas fa-angle-double-up" aria-hidden="true"></i>
+</a>
+<!-- End Back to Top button -->
+
+@section Scripts {
+
+    <script>
+        $(function () {
+            $(".chat-submit").on("click", function (e) {
+                e.preventDefault();
+
+                $(".chat-awaiting").removeClass("d-none");
+
+                const button = $(this);
+                const form = $(".chat-form");
+                const messageInput = $("#messageInput");
+                const messageInputValue = messageInput.val();
+
+                button.attr("disabled", "");
+                messageInput.attr("readonly", "");
+
+                $.ajax({
+                    url: "@Url.Action("GetResponse", "ChatApi")",
+                    method: "GET",
+                    data: form.serialize()
+                }).done(function (html) {
+                    const query = $("<div/>")
+                        .addClass("query")
+                        .html(`<strong>@this.User.Identity.Name:</strong><br/>${messageInputValue}<br/>`);
+
+                    const response = $("<div/>")
+                        .addClass("response")
+                        .html(`<strong>ChatGPT:</strong><br/>${html}`);
+
+                    $("#messagesList").append(query);
+                    $("#messagesList").append(response);
+                    messageInput.val("");
+                }).fail(function (data) {
+                    console.log(data);
+                    $("#error-message").text(data);
+                }).always(function () {
+                    $(".chat-awaiting").addClass("d-none");
+                    button.removeAttr("disabled");
+                    messageInput.removeAttr("readonly");
+                });
+            });
+        });
+    </script>
+}

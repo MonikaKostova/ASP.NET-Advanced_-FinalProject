@@ -1,0 +1,175 @@
+/* General Styles */
+html {
+    font-size: 14px; /* Default size for mobile */
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px; /* Larger font size for tablets and desktop */
+    }
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa; /* Light background for the body */
+    color: #333; /* Dark text for readability */
+    margin: 0;
+    padding: 0;
+    margin-bottom: 60px; /* Space for footer */
+}
+
+/* Responsive container padding */
+.container {
+    padding: 20px;
+}
+
+/* Footer styling */
+footer {
+    background-color: #f8f9fa;
+    padding: 15px 0;
+    text-align: center;
+    border-top: 1px solid #ddd;
+}
+
+/* General link styling */
+a {
+    color: #007bff; /* Bootstrap blue */
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+/* Navbar Styling */
+header {
+    background-color: #007bff; /* Bootstrap primary blue */
+    color: white;
+    padding: 10px 0;
+}
+
+    header .navbar-brand {
+        font-weight: bold;
+        font-size: 24px;
+    }
+
+    header .navbar-nav .nav-link {
+        color: white !important; /* Ensure links are white */
+        padding: 10px 15px;
+    }
+
+/* Navbar collapse button for mobile view */
+@media (max-width: 768px) {
+    header .navbar-toggler {
+        border-color: #007bff; /* Match button color with navbar */
+    }
+
+    header .navbar-toggler-icon {
+        background-color: #007bff; /* Adjust icon color */
+    }
+}
+
+/* Button Styling */
+.btn-custom {
+    background-color: #28a745; /* Green background */
+    color: white;
+    border-radius: 0.375rem;
+}
+
+    .btn-custom:hover {
+        background-color: #218838; /* Darker green on hover */
+    }
+
+    .btn-custom:focus, .btn-custom:active:focus {
+        box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #218838; /* Custom focus box */
+    }
+
+/* Form Styling */
+.form-control {
+    border-radius: 0.375rem;
+    padding: 10px;
+    font-size: 16px;
+}
+
+    /* Input focus */
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.25rem rgba(38, 140, 251, 0.25);
+    }
+
+/* Label styling */
+.form-label {
+    font-weight: bold;
+}
+
+/* Error message styling */
+.text-danger {
+    color: #dc3545 !important; /* Red text for error messages */
+}
+
+/* Custom checkbox and radio buttons */
+.form-check-input:checked {
+    background-color: #28a745; /* Green color for checked checkboxes */
+}
+
+/* Modal Styling (if used) */
+.modal-content {
+    background-color: #fff;
+    border-radius: 0.5rem;
+}
+
+.modal-header {
+    background-color: #007bff;
+    color: white;
+}
+
+.modal-footer {
+    background-color: #f8f9fa;
+}
+
+/* Custom alert styling */
+.alert-custom {
+    background-color: #ffc107; /* Yellow for warnings */
+    color: #856404;
+    border-radius: 0.375rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header .navbar-nav {
+        text-align: center;
+    }
+
+    footer {
+        padding: 10px;
+    }
+}
+
+/* Global Styles for Better Visual Appeal */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px; /* Footer space */
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+footer {
+    background-color: #f8f9fa;
+    padding: 15px 0;
+    text-align: center;
+    border-top: 1px solid #ddd;
+}
+
+    footer a {
+        color: #007bff; /* Blue links */
+    }
+
+        footer a:hover {
+            text-decoration: underline;
+        }

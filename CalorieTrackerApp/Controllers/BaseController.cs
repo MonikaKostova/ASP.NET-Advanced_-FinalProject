@@ -14,7 +14,7 @@ namespace CalorieTrackerCookBookApp.Controllers
         }
 
         // Example method with nullable return type
-        public User? GetCurrentUser()
+        public ApplicationUser? GetCurrentUser()
         {
             // Get the user's ID from the current user's claims
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using CalorieTrackerCookBookApp.Models;
 using CalorieTrackerCookBookApp.Data;
 
@@ -9,14 +8,11 @@ namespace CalorieTrackerCookBookApp.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-        }
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager) =>
+       (_userManager, _signInManager) = (userManager, signInManager);
 
         [HttpGet]
         public IActionResult Login()
@@ -50,7 +46,7 @@ namespace CalorieTrackerCookBookApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

@@ -5,6 +5,7 @@ using CalorieTrackerCookBookApp.Controllers;
 using CalorieTrackerCookBookApp.Services;
 using CalorieTrackerCookBookApp.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 
 namespace CalorieTrackerApp
@@ -18,9 +19,22 @@ namespace CalorieTrackerApp
             // Register DbContext with the connection string
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+           
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Account/Login";
+                    options.AccessDeniedPath = "/Account/AccessDenied";
+                });
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AuthenticatedUser", policy => policy.RequireAuthenticatedUser());
+            });
+
 
             // Register Identity with the custom User class
-            builder.Services.AddIdentity<User, IdentityRole>()
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -53,6 +67,5 @@ namespace CalorieTrackerApp
 
             app.Run();
         }
-        
     }
 }

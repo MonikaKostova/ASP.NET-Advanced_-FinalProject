@@ -19,7 +19,7 @@ namespace CalorieTrackerCookBookApp.Data
         public string AuthorId { get; set; } = null!;
 
         [ForeignKey("AuthorId")] 
-        public User Author { get; set; } = null!;
+        public ApplicationUser Author { get; set; } = null!;
 
         [Required]
         public int RecipeId { get; set; }

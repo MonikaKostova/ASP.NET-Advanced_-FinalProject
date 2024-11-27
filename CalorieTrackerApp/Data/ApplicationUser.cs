@@ -4,7 +4,7 @@ using static CalorieTrackerCookBookApp.Common.ValidationConstraints;
 
 namespace CalorieTrackerCookBookApp.Data
 {
-    public class User : IdentityUser
+    public class ApplicationUser : IdentityUser
     {
         
        [Key]
@@ -30,6 +30,12 @@ namespace CalorieTrackerCookBookApp.Data
         // Many-to-Many relationship: A User can have many Favorites
         public ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();
 
+        public List<string> Roles { get; set; } = new List<string>();
+
+        public ApplicationUser()
+        {
+            Roles = new List<string> { "Admin", "User" };  // Simplified initialization
+        }
     }
 
 }

@@ -28,7 +28,7 @@ namespace CalorieTrackerCookBookApp.Data
         public string OwnerId { get;  set; } = null!;
 
         [ForeignKey("OwnerId")] // Foreign Key
-        public User Owner { get; set; } = null!;
+        public ApplicationUser Owner { get; set; } = null!;
 
         // One-to-Many relationship: A Recipe can have many Images
         public ICollection<RecipeImage> Images { get; set; } = new List<RecipeImage>();

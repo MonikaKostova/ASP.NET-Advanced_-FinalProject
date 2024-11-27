@@ -1,18 +1,28 @@
 using CalorieTrackerApp.Models;
+using CalorieTrackerCookBookApp.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using CalorieTrackerCookBookApp.Data;
 
 namespace CalorieTrackerApp.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly SignInManager<ApplicationUser> _signInManager;
+
+        public HomeController(SignInManager<ApplicationUser> signInManager)
+        {
+            _signInManager = signInManager;
+        }
         public IActionResult Index()
         {
-            if (User?.Identity?.IsAuthenticated ?? false)
+            var viewModel = new HomeViewModel
             {
-                return RedirectToAction("Index", "Event");
-            }
-            return View();
+                IsSignedIn = _signInManager.IsSignedIn(User)
+            };
+
+            return View(viewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

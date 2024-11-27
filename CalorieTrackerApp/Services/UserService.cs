@@ -66,7 +66,7 @@ namespace CalorieTrackerCookBookApp.Services
         // Method to create a new user
         public void CreateUser(UserCreateViewModel model)
         {
-            var newUser = new User
+            var newUser = new ApplicationUser
             {
                 CurrentUsername = model.CurrentUsername,
                 UserEmail = model.UserEmail,

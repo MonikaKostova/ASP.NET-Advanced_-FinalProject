@@ -4,7 +4,7 @@ using System.Reflection.Emit;
 
 namespace CalorieTrackerCookBookApp.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<User>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
@@ -12,7 +12,7 @@ namespace CalorieTrackerCookBookApp.Data
         }
 
         // DbSets for each entity
-        public DbSet<User> AppUsers { get; set; }
+        public DbSet<ApplicationUser> AppUsers { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Favorite> Favorites { get; set; }
         public DbSet<RecipeImage> RecipeImages { get; set; }

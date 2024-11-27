@@ -13,7 +13,7 @@ namespace CalorieTrackerCookBookApp.Data
 
         // Foreign Keys
        // [ForeignKey("UserId")]
-        public User User { get; set; } = null!;
+        public ApplicationUser User { get; set; } = null!;
 
         //[ForeignKey("RecipeId")]
         public Recipe Recipe { get; set; } = null!;
